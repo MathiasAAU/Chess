@@ -33,25 +33,27 @@ export class GameComponent {
 
   public selectSquare(clickedId: string) {
     const selected = document.getElementById(clickedId);
-
+    // If a piece has been selected and the square clicked is the destination
     if (this.pieceIsSelected) {
+      // API call to move the piece
       this.http.post<any>(this.baseUrl + 'game/' + this.selectedPieceId + '/' + clickedId + '/move', {}).subscribe(result => {
+        // API call to get the new game status
         this.http.get<string>(this.baseUrl + 'game/status').subscribe(status => {
           this.game = JSON.parse(JSON.stringify(status));
         }, getError => console.error(getError));
-
+        // Clears the square colors to black/white
         this.clearChoice();
       }, postError => console.error(postError));
-
     } else {
-      // API calls that returns true if it is a piece that is chosen and the right color
+      // API calls that returns true if the square clicked has a piece that is the right color
       this.http.get<any>(this.baseUrl + 'game/' + clickedId + '/' + this.game.currentTurn + '/currentTurnPiece').subscribe(validSquare => {
         if (validSquare) {
+          // Updates variables and changes color of the clicked square
           selected.className = 'blue';
           this.pieceIsSelected = true;
           this.selectedPieceId = clickedId;
 
-          // API calls that returns the squares the selected piece can move to
+          // API calls that returns the squares the selected piece is able to move to
           this.http.get<string>(this.baseUrl + 'game/' + clickedId + '/possibleSquares').subscribe(squares => {
             this.showPossibleSquares(JSON.parse(JSON.stringify(squares)), clickedId);
           }, error => console.error(error));
@@ -59,17 +61,19 @@ export class GameComponent {
       }, error => console.error(error));
 
     }
-
   }
 
+  // Changes a list of squares color to green
   private showPossibleSquares(squares: Square[], clicked: string) {
     squares.forEach(function (square) {
       document.getElementById(GameComponent.getSquareId(square)).className = 'green';
     });
   }
 
+  // Clears any choice a player has made
   public clearChoice() {
     this.pieceIsSelected = false;
+    // Resets the color of all squares
     this.game.board.forEach(function (column) {
       column.forEach(function (square) {
         let classColor = 'white';
@@ -79,6 +83,7 @@ export class GameComponent {
     });
   }
 
+  // Gets the color for a square given the [x] and [y] coord
   public getSquareColor(x: number, y: number) {
     let color = 'white';
     if ((x + y) % 2 === 0) {
@@ -87,12 +92,13 @@ export class GameComponent {
     return color;
   }
 
+  // Creates a new game
   public newGame() {
     this.http.post<any>(this.baseUrl + 'game/newGame', {}).subscribe(result => {
       this.http.get<string>(this.baseUrl + 'game/status').subscribe(status => {
         this.game = JSON.parse(JSON.stringify(status));
-      }, error => console.error(error));
-    }, error => console.error(error));
+      }, getError => console.error(getError));
+    }, postError => console.error(postError));
     this.clearChoice();
   }
 
