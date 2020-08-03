@@ -185,7 +185,6 @@
     }
 
     public class Pawn : Piece {
-        private int pawnRow;
         public Pawn(bool white) : base(white) {
             this.value = 1;
         }
