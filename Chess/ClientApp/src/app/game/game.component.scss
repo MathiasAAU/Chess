@@ -1,0 +1,71 @@
+﻿.default {cursor: default;}
+
+.chessboard {
+  width: 810px;
+  height: 810px;
+  margin: auto;
+  border: 5px solid #333;
+}
+.black {
+  float: left;
+  width: 100px;
+  height: 100px;
+  background-color: #999;
+  font-size: 75px;
+  font-family: serif;
+  text-align: center;
+  display: table-cell;
+  vertical-align: middle;
+  cursor: default;
+}
+.white {
+  float: left;
+  width: 100px;
+  height: 100px;
+  background-color: #fff;
+  font-size: 75px;
+  font-family: serif;
+  text-align: center;
+  display: table-cell;
+  vertical-align: middle;
+  cursor: default;
+}
+
+.green {
+  float: left;
+  width: 100px;
+  height: 100px;
+  background-color: #55b82d;
+  font-size: 75px;
+  font-family: serif;
+  text-align: center;
+  display: table-cell;
+  vertical-align: middle;
+  cursor: default;
+}
+
+.red {
+  float: left;
+  width: 100px;
+  height: 100px;
+  background-color: #b82d2d;
+  font-size: 75px;
+  font-family: serif;
+  text-align: center;
+  display: table-cell;
+  vertical-align: middle;
+  cursor: default;
+}
+
+.blue {
+  float: left;
+  width: 100px;
+  height: 100px;
+  background-color: #0059ff;
+  font-size: 75px;
+  font-family: serif;
+  text-align: center;
+  display: table-cell;
+  vertical-align: middle;
+  cursor: default;
+}
