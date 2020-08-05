@@ -75,21 +75,21 @@ using System.Collections.Generic;
                 } else return false;
             }
             else {
-                // Performs the move
-                move.piece.hasMoved = true;
-                move.dest.piece = move.piece;
-                move.origin.piece = null;
-
-                // Move creates checkmate
-                if (this._board.isCheckMate(this._currentTurn == this._p1 ? this._p2 : this._p1)) {
-                    this._state = (this._currentTurn.isWhite ? GameState.WhiteWin : GameState.BlackWin);
-                }
-
                 // Changes the state of the game if the king is killed
                 if (move.destPiece != null && move.destPiece.GetType() == typeof(King)) {
                     this._state = player.isWhite ? GameState.WhiteWin : GameState.BlackWin;
                 }
                 
+                // Performs the move
+                move.piece.hasMoved = true;
+                move.dest.piece = move.piece;
+                move.origin.piece = null;
+                
+                // Move creates checkmate
+                if (this._board.isCheckMate(this._currentTurn == this._p1 ? this._p2 : this._p1)) {
+                    this._state = (player.isWhite ? GameState.WhiteWin : GameState.BlackWin);
+                }
+
                 // If a pawn have made it to the last rank, then it becomes a queen
                 int enemyKingRank = player.isWhite ? 7 : 0;
                 if (move.piece.GetType() == typeof(Pawn) && move.dest.y == enemyKingRank) {
@@ -101,14 +101,6 @@ using System.Collections.Generic;
             this.moves.Add(move);
             this.currentTurn = this.currentTurn == this.p1 ? this.p2 : this.p1;
             return true;
-        }
-
-        //TODO FIX
-        public void startGame() {
-
-            while (this.state == GameState.Active) {
-                
-            }
         }
         
 

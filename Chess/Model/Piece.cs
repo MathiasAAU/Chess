@@ -58,7 +58,7 @@
             var y = Math.Abs(origin.y - dest.y);
 
             // Returns true if move is legal and updates [canCastle]
-            if (x <= 1 && y <= 1 && !board.isChecked(this, dest)) {
+            if (x <= 1 && y <= 1 && !board.moveCreatesCheck(origin, dest)) {
                 return true;
             }
             return false;
@@ -196,7 +196,7 @@
             if (origin.x == dest.x && dest.piece == null) {
                 // You are able to move two squares on first move
                 if (!this.hasMoved && board.isFreePath(origin, dest)) { 
-                    return dest.y - origin.y == direction || dest.y - origin.y == direction * 2;
+                    return (dest.y - origin.y == direction || dest.y - origin.y == direction * 2) && !board.moveCreatesCheck(origin, dest);
                 }
                 return dest.y - origin.y == direction && !board.moveCreatesCheck(origin, dest);
             }

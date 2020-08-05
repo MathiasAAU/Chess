@@ -36,8 +36,9 @@ namespace Chess.Controllers {
             return array.ToString();
         }
         
-        [HttpGet("{id}/{boole}/currentTurnPiece")]
-        public bool Get(string id, bool boole) {
+        // GET call that returns true if the piece matches the player
+        [HttpGet("{id}/{currentTurn}/currentTurnPiece")]
+        public bool Get(string id, bool currentTurn) {
             string[] coords = id.Split(",");
             int x = int.Parse(coords[0]);
             int y = int.Parse(coords[1]);
@@ -45,8 +46,10 @@ namespace Chess.Controllers {
             return this.playerMatchPiece(x, y);
         }
 
+
+        // POST call that performs a move and returns true if it is a legal move
         [HttpPost("{originId}/{destId}/move")]
-        public void Post(string originId, string destId) {
+        public bool Post(string originId, string destId) {
             string[] originCoords = originId.Split(",");
             int xOrigin = int.Parse(originCoords[0]);
             int yOrigin = int.Parse(originCoords[1]);
@@ -57,9 +60,10 @@ namespace Chess.Controllers {
             
             if(!this.playerMatchPiece(xOrigin, yOrigin)) throw new Exception("Player and piece mismatch");
             
-            _game.move(_game.currentTurn, xOrigin, yOrigin, xDest, yDest);
+            return _game.move(_game.currentTurn, xOrigin, yOrigin, xDest, yDest);
         }
 
+        // POST call that creates a new game
         [HttpPost("newGame")]
         public void Post() {
             _game.resetGame(_player1, _player2, false);

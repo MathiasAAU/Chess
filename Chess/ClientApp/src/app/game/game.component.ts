@@ -38,9 +38,11 @@ export class GameComponent {
       // API call to move the piece
       this.http.post<any>(this.baseUrl + 'game/' + this.selectedPieceId + '/' + clickedId + '/move', {}).subscribe(result => {
         // API call to get the new game status
-        this.http.get<string>(this.baseUrl + 'game/status').subscribe(status => {
-          this.game = JSON.parse(JSON.stringify(status));
-        }, getError => console.error(getError));
+        if (result) {
+          this.http.get<string>(this.baseUrl + 'game/status').subscribe(status => {
+            this.game = JSON.parse(JSON.stringify(status));
+          }, getError => console.error(getError));
+        }
         // Clears the square colors to black/white
         this.clearChoice();
       }, postError => console.error(postError));
@@ -123,4 +125,9 @@ interface Square {
 interface Player {
   isWhite: boolean;
   score:   number;
+}
+
+interface DeadPiece {
+  isWhite: boolean;
+  piece:   string;
 }

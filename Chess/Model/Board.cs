@@ -20,12 +20,12 @@ using System.Collections.Generic;
      *                    WHITE
      */
     public class Board {
-        private Square[][] _squares = new Square[8][];
+        private Square[][] _squares = new Square[Constants.SIZE][];
         private List<Piece> _deadPieces = new List<Piece>();
 
         public Board() {
-            for (int i = 0; i < 8; i++) {
-                this._squares[i] = new Square[8];
+            for (int i = 0; i < Constants.SIZE; i++) {
+                this._squares[i] = new Square[Constants.SIZE];
             }
             this.initializeBoard();
         }
@@ -43,7 +43,7 @@ using System.Collections.Generic;
             this.initializePieces(false); // Black pieces
 
             // Empty squares
-            for (int i = 0; i < 8; i++) {
+            for (int i = 0; i < Constants.SIZE; i++) {
                 for (int j = 2; j < 6; j++) {
                     this.squares[i][j] = new Square(null, i, j);
                 }
@@ -57,9 +57,9 @@ using System.Collections.Generic;
         
         public JArray boardToJson() {
             JArray squaresX = new JArray();
-            for (int i = 0; i < 8; i++) {
+            for (int i = 0; i < Constants.SIZE; i++) {
                 JArray squaresY = new JArray();
-                for (int j = 0; j < 8; j++) {
+                for (int j = 0; j < Constants.SIZE; j++) {
                     squaresY.Add(this._squares[i][j].toJSON());
                 }
                 squaresX.Add(squaresY);
@@ -71,8 +71,8 @@ using System.Collections.Generic;
             List<Square> accessibleSquares = new List<Square>();
             Square origin = this.getSquare(x, y);
             if (origin.piece == null) return accessibleSquares;
-            for (int i = 0; i < 8; i++) {
-                for (int j = 0; j < 8; j++) {
+            for (int i = 0; i < Constants.SIZE; i++) {
+                for (int j = 0; j < Constants.SIZE; j++) {
                     if (origin.piece.canMove(this, origin, this.getSquare(i, j))) {
                         accessibleSquares.Add(this.getSquare(i, j));
                     }
@@ -82,8 +82,8 @@ using System.Collections.Generic;
         }
 
         public bool isChecked(King king, Square kingSquare) {
-            for (var i = 0; i < 8; i++) {
-                for (var j = 0; j < 8; j++) {
+            for (var i = 0; i < Constants.SIZE; i++) {
+                for (var j = 0; j < Constants.SIZE; j++) {
                     if (this.squares[i][j].piece != null &&
                         this.squares[i][j].piece.isWhite != king.isWhite) {
                         if(this.squares[i][j].piece.canAttack(this, this.squares[i][j], kingSquare)) {
@@ -104,8 +104,8 @@ using System.Collections.Generic;
                 return false;
             }
 
-            for (int i = 0; i < 8; i++) {
-                for (int j = 0; j < 8; j++) {
+            for (int i = 0; i < Constants.SIZE; i++) {
+                for (int j = 0; j < Constants.SIZE; j++) {
                     if (this.squares[i][j].piece != null && this.squares[i][j].piece.isWhite == isWhite &&
                         this.pieceCanStopCheck(kingSquare, this.squares[i][j], isWhite)) {
                         return false;
@@ -116,10 +116,10 @@ using System.Collections.Generic;
         }
 
         private bool pieceCanStopCheck(Square kingSquare, Square square, bool isWhite) {
-            for (int i = 0; i < 8; i++) {
-                for (int j = 0; j < 8; j++) {
+            for (int i = 0; i < Constants.SIZE; i++) {
+                for (int j = 0; j < Constants.SIZE; j++) {
                     if (square.piece.canMove(this, square, this.squares[i][j]) &&
-                        !this.canAnyPieceAttack(kingSquare, !isWhite)) {
+                        !this.canAnyPieceAttack(kingSquare)) {
                         return true;
                     }
                 }
@@ -127,9 +127,9 @@ using System.Collections.Generic;
             return false;
         }
 
-        private bool canAnyPieceAttack(Square square, bool isWhite) {
-            for (int i = 0; i < 8; i++) {
-                for (int j = 0; j < 8; j++) {
+        private bool canAnyPieceAttack(Square square) {
+            for (int i = 0; i < Constants.SIZE; i++) {
+                for (int j = 0; j < Constants.SIZE; j++) {
                     if (this.squares[i][j].piece != null 
                         && this.squares[i][j].piece.canAttack(this, this.squares[i][j], square)){
                         return true;
@@ -141,25 +141,24 @@ using System.Collections.Generic;
         
 
         public bool moveCreatesCheck(Square origin, Square dest) {
-            // Copies pieces and simulates outcome
-            Piece oPiece = origin.piece;
-            Piece dPiece = dest.piece;
-            this.squares[origin.x][origin.y].piece = null;
-            this.squares[dest.x][dest.y].piece = oPiece;
+            // Creates a copy of the board and simulates a move
+            Board copy = new Board();
+            for (int i = 0; i < Constants.SIZE; i++) {
+                for (int j = 0; j < Constants.SIZE; j++) {
+                    copy.getSquare(i, j).piece = this._squares[i][j].piece;
+                }
+            }
             
-            // True: new move makes the king be in check
-            bool isChecked = this.isChecked(this.getKing(oPiece.isWhite), this.getKingSquare(oPiece.isWhite));
+            copy.getSquare(origin.x, origin.y).piece = null;
+            copy.getSquare(dest.x, dest.y).piece = origin.piece;
 
-            // Reverts the simulated state of the board
-            this.squares[origin.x][origin.y].piece = oPiece;
-            this.squares[dest.x][dest.y].piece = dPiece;
-            
-            return isChecked;
+            // returns true if the move made by [x] makes [x] be in check
+            return copy.isChecked(copy.getKing(origin.piece.isWhite), copy.getKingSquare(origin.piece.isWhite));
         }
         
         public Square getKingSquare(bool isWhite) {
-            for (int i = 0; i < 8; i++) {
-                for (int j = 0; j < 8; j++) {
+            for (int i = 0; i < Constants.SIZE; i++) {
+                for (int j = 0; j < Constants.SIZE; j++) {
                     if (this.squares[i][j].piece != null && 
                         this.squares[i][j].piece.GetType() == typeof(King) &&
                         this.squares[i][j].piece.isWhite == isWhite) {
@@ -224,15 +223,16 @@ using System.Collections.Generic;
 
         // Returns true if the two squares the kings moves during castle is NOT in control by an enemy piece and no friendly pieces are blocking
         public bool isFreeCastlePath(Square origin, Square dest) {
-            int newKingX = origin.x < dest.x ? origin.x + 2 : origin.x - 2;
-            int direction = newKingX > origin.x ? 1 : -1;
-            int nextX = origin.x + direction;
-            
-            while (nextX != newKingX) {
-                if (this.isChecked((King) origin.piece, this.getSquare(nextX, origin.y)) || this.getSquare(nextX, origin.y).piece != null) {
+            int direction = origin.x < dest.x ? 1 : -1;
+            int x = origin.x + direction;
+
+            // Checks all squares between king and rook
+            while (x != dest.x) {
+                // returns false if the square is controlled by enemy piece or has a piece on it
+                if (this.isChecked((King) origin.piece, this.getSquare(x, origin.y)) || this.getSquare(x, origin.y).piece != null) {
                     return false;
                 }
-                nextX += direction;
+                x += direction;
             }
             return true;
         }
@@ -255,14 +255,14 @@ using System.Collections.Generic;
             this.squares[6][kingRow] = new Square(new Knight(isWhite), 6, kingRow);
             this.squares[7][kingRow] = new Square(new Rook(isWhite), 7, kingRow);
 
-            for (int i = 0; i < 8; i++) {
+            for (int i = 0; i < Constants.SIZE; i++) {
                 this.squares[i][pawnRow] = new Square(new Pawn(isWhite), i, pawnRow);
             }
         }
 
         public void clearBoard() {
-            for (int i = 0; i < 8; i++) {
-                for (int j = 0; j < 8; j++) {
+            for (int i = 0; i < Constants.SIZE; i++) {
+                for (int j = 0; j < Constants.SIZE; j++) {
                     this.squares[i][j] = new Square(null, i, j);
                 }
             }
