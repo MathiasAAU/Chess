@@ -3,6 +3,7 @@
 
  namespace Chess.Model {
     public class Player {
+        private string _name = Constant.RngName(Constant.SIZE);
         private bool _isWhite;
         private int _score;
 
@@ -12,9 +13,15 @@
 
         public JObject toJson() {
             dynamic player = new JObject();
+            player.name = this._name;
             player.isWhite = this._isWhite;
             player.score = this._score;
             return player;
+        }
+
+        public string name {
+            get => this._name;
+            set => this._name = value;
         }
 
         public bool isWhite {

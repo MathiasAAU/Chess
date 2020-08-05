@@ -16,7 +16,7 @@
   </div>
 
   <div *ngFor="let move of game.moves;">
-    <p aria-live="polite">{{move.piece}}: {{move.origin.x}},{{move.origin.y}} to {{move.dest.x}},{{move.dest.y}}</p>
+    <p aria-live="polite">{{move.player.name}} - {{move.piece}}: {{move.origin.x}},{{move.origin.y}} to {{move.dest.x}},{{move.dest.y}}</p>
   </div>
 
 </body>

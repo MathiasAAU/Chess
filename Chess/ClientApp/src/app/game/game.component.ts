@@ -123,6 +123,7 @@ interface Square {
 }
 
 interface Player {
+  name:       string;
   isWhite:    boolean;
   score:      number;
 }
