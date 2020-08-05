@@ -10,7 +10,7 @@
             this._isWhite = isWhite;
         }
 
-        public JObject toJSON() {
+        public JObject toJson() {
             dynamic player = new JObject();
             player.isWhite = this._isWhite;
             player.score = this._score;
@@ -43,6 +43,16 @@
             this._piece = origin.piece;
             this._destPiece = dest.piece;
             this._isCastlingMove = this.checkForCastle();
+        }
+
+        public JObject toJson() {
+            dynamic move = new JObject();
+            move.player = this._player.toJson();
+            move.origin = this._origin.toJson();
+            move.dest = this._dest.toJson();
+            move.piece = this._piece.getUniCode();
+            move.isCastleMove = this._isCastlingMove;
+            return move;
         }
 
         // Returns true if it is a castle move

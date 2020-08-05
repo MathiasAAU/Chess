@@ -20,12 +20,12 @@ using System.Collections.Generic;
      *                    WHITE
      */
     public class Board {
-        private Square[][] _squares = new Square[Constants.SIZE][];
+        private Square[][] _squares = new Square[Constant.SIZE][];
         private List<Piece> _deadPieces = new List<Piece>();
 
         public Board() {
-            for (int i = 0; i < Constants.SIZE; i++) {
-                this._squares[i] = new Square[Constants.SIZE];
+            for (int i = 0; i < Constant.SIZE; i++) {
+                this._squares[i] = new Square[Constant.SIZE];
             }
             this.initializeBoard();
         }
@@ -43,7 +43,7 @@ using System.Collections.Generic;
             this.initializePieces(false); // Black pieces
 
             // Empty squares
-            for (int i = 0; i < Constants.SIZE; i++) {
+            for (int i = 0; i < Constant.SIZE; i++) {
                 for (int j = 2; j < 6; j++) {
                     this.squares[i][j] = new Square(null, i, j);
                 }
@@ -54,13 +54,24 @@ using System.Collections.Generic;
             this.deadPieces.Clear();
             this.initializeBoard();
         }
+
+        public JArray deadPiecesToJson() {
+            JArray pieces = new JArray();
+            foreach (Piece piece in this._deadPieces) {
+                dynamic pieceObject = new JObject();
+                pieceObject.isWhite = piece.isWhite;
+                pieceObject.piece = piece.getUniCode();
+                pieces.Add(pieceObject);
+            }
+            return pieces;
+        }
         
         public JArray boardToJson() {
             JArray squaresX = new JArray();
-            for (int i = 0; i < Constants.SIZE; i++) {
+            for (int i = 0; i < Constant.SIZE; i++) {
                 JArray squaresY = new JArray();
-                for (int j = 0; j < Constants.SIZE; j++) {
-                    squaresY.Add(this._squares[i][j].toJSON());
+                for (int j = 0; j < Constant.SIZE; j++) {
+                    squaresY.Add(this._squares[i][j].toJson());
                 }
                 squaresX.Add(squaresY);
             }
@@ -71,8 +82,8 @@ using System.Collections.Generic;
             List<Square> accessibleSquares = new List<Square>();
             Square origin = this.getSquare(x, y);
             if (origin.piece == null) return accessibleSquares;
-            for (int i = 0; i < Constants.SIZE; i++) {
-                for (int j = 0; j < Constants.SIZE; j++) {
+            for (int i = 0; i < Constant.SIZE; i++) {
+                for (int j = 0; j < Constant.SIZE; j++) {
                     if (origin.piece.canMove(this, origin, this.getSquare(i, j))) {
                         accessibleSquares.Add(this.getSquare(i, j));
                     }
@@ -82,8 +93,8 @@ using System.Collections.Generic;
         }
 
         public bool isChecked(King king, Square kingSquare) {
-            for (var i = 0; i < Constants.SIZE; i++) {
-                for (var j = 0; j < Constants.SIZE; j++) {
+            for (var i = 0; i < Constant.SIZE; i++) {
+                for (var j = 0; j < Constant.SIZE; j++) {
                     if (this.squares[i][j].piece != null &&
                         this.squares[i][j].piece.isWhite != king.isWhite) {
                         if(this.squares[i][j].piece.canAttack(this, this.squares[i][j], kingSquare)) {
@@ -104,8 +115,8 @@ using System.Collections.Generic;
                 return false;
             }
 
-            for (int i = 0; i < Constants.SIZE; i++) {
-                for (int j = 0; j < Constants.SIZE; j++) {
+            for (int i = 0; i < Constant.SIZE; i++) {
+                for (int j = 0; j < Constant.SIZE; j++) {
                     if (this.squares[i][j].piece != null && this.squares[i][j].piece.isWhite == isWhite &&
                         this.pieceCanStopCheck(kingSquare, this.squares[i][j], isWhite)) {
                         return false;
@@ -116,8 +127,8 @@ using System.Collections.Generic;
         }
 
         private bool pieceCanStopCheck(Square kingSquare, Square square, bool isWhite) {
-            for (int i = 0; i < Constants.SIZE; i++) {
-                for (int j = 0; j < Constants.SIZE; j++) {
+            for (int i = 0; i < Constant.SIZE; i++) {
+                for (int j = 0; j < Constant.SIZE; j++) {
                     if (square.piece.canMove(this, square, this.squares[i][j]) &&
                         !this.canAnyPieceAttack(kingSquare)) {
                         return true;
@@ -128,8 +139,8 @@ using System.Collections.Generic;
         }
 
         private bool canAnyPieceAttack(Square square) {
-            for (int i = 0; i < Constants.SIZE; i++) {
-                for (int j = 0; j < Constants.SIZE; j++) {
+            for (int i = 0; i < Constant.SIZE; i++) {
+                for (int j = 0; j < Constant.SIZE; j++) {
                     if (this.squares[i][j].piece != null 
                         && this.squares[i][j].piece.canAttack(this, this.squares[i][j], square)){
                         return true;
@@ -143,8 +154,8 @@ using System.Collections.Generic;
         public bool moveCreatesCheck(Square origin, Square dest) {
             // Creates a copy of the board and simulates a move
             Board copy = new Board();
-            for (int i = 0; i < Constants.SIZE; i++) {
-                for (int j = 0; j < Constants.SIZE; j++) {
+            for (int i = 0; i < Constant.SIZE; i++) {
+                for (int j = 0; j < Constant.SIZE; j++) {
                     copy.getSquare(i, j).piece = this._squares[i][j].piece;
                 }
             }
@@ -157,8 +168,8 @@ using System.Collections.Generic;
         }
         
         public Square getKingSquare(bool isWhite) {
-            for (int i = 0; i < Constants.SIZE; i++) {
-                for (int j = 0; j < Constants.SIZE; j++) {
+            for (int i = 0; i < Constant.SIZE; i++) {
+                for (int j = 0; j < Constant.SIZE; j++) {
                     if (this.squares[i][j].piece != null && 
                         this.squares[i][j].piece.GetType() == typeof(King) &&
                         this.squares[i][j].piece.isWhite == isWhite) {
@@ -255,14 +266,14 @@ using System.Collections.Generic;
             this.squares[6][kingRow] = new Square(new Knight(isWhite), 6, kingRow);
             this.squares[7][kingRow] = new Square(new Rook(isWhite), 7, kingRow);
 
-            for (int i = 0; i < Constants.SIZE; i++) {
+            for (int i = 0; i < Constant.SIZE; i++) {
                 this.squares[i][pawnRow] = new Square(new Pawn(isWhite), i, pawnRow);
             }
         }
 
         public void clearBoard() {
-            for (int i = 0; i < Constants.SIZE; i++) {
-                for (int j = 0; j < Constants.SIZE; j++) {
+            for (int i = 0; i < Constant.SIZE; i++) {
+                for (int j = 0; j < Constant.SIZE; j++) {
                     this.squares[i][j] = new Square(null, i, j);
                 }
             }

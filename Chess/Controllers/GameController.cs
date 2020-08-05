@@ -16,7 +16,7 @@ namespace Chess.Controllers {
         
         [HttpGet("status")]
         public string Get() {
-            return _game.toJSON().ToString();
+            return _game.toJson().ToString();
         }
         
         [HttpGet("{id}/possibleSquares")]
@@ -31,7 +31,7 @@ namespace Chess.Controllers {
             
             JArray array = new JArray();
             foreach(Square square in squares){
-                array.Add(square.toJSON());
+                array.Add(square.toJson());
             }
             return array.ToString();
         }

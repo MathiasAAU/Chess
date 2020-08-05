@@ -106,28 +106,36 @@ export class GameComponent {
 
 }
 
-
-
 interface Game {
   player1:     Player;
   player2:     Player;
   currentTurn: boolean;
   state:       string;
   board:       Square[][];
+  deadPieces:  DeadPiece[];
+  moves:       Move[];
 }
 
 interface Square {
-  x:     number;
-  y:     number;
-  piece: string;
+  x:          number;
+  y:          number;
+  piece:      string;
 }
 
 interface Player {
-  isWhite: boolean;
-  score:   number;
+  isWhite:    boolean;
+  score:      number;
 }
 
 interface DeadPiece {
-  isWhite: boolean;
-  piece:   string;
+  isWhite:    boolean;
+  piece:      string;
+}
+
+interface Move {
+  player:     Player;
+  origin:     Square;
+  dest:       Square;
+  piece:      string;
+  isCastle:   boolean;
 }

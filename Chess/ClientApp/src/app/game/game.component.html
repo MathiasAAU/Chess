@@ -14,4 +14,9 @@
       </div>
     </div>
   </div>
+
+  <div *ngFor="let move of game.moves;">
+    <p aria-live="polite">{{move.piece}}: {{move.origin.x}},{{move.origin.y}} to {{move.dest.x}},{{move.dest.y}}</p>
+  </div>
+
 </body>

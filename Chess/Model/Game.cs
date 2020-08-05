@@ -11,14 +11,24 @@ using System.Collections.Generic;
         private GameState _state;
         private List<Move> _moves = new List<Move>();
 
-        public JObject toJSON() {
+        public JObject toJson() {
             dynamic game = new JObject();
-            game.player1 = this._p1.toJSON();
-            game.player2 = this._p2.toJSON();
+            game.player1 = this._p1.toJson();
+            game.player2 = this._p2.toJson();
             game.currentTurn = this._currentTurn.isWhite;
             game.state = this._state.ToString();
             game.board = this._board.boardToJson();
+            game.deadPieces = this._board.deadPiecesToJson();
+            game.moves = this.movesToJson();
             return game;
+        }
+
+        private JArray movesToJson() {
+            JArray moveArray = new JArray();
+            foreach (Move move in this._moves) {
+                moveArray.Add(move.toJson());
+            }
+            return moveArray;
         }
        
         

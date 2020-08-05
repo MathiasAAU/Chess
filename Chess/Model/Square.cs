@@ -14,7 +14,7 @@
             this._y = y;
         }
 
-        public JObject toJSON() {
+        public JObject toJson() {
             dynamic square = new JObject();
             square.x = this._x;
             square.y = this._y;
