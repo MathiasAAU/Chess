@@ -18,6 +18,10 @@ export class GameComponent {
     this.http = http;
     this.baseUrl = baseUrl;
     this.squares = [7, 6, 5, 4, 3, 2, 1, 0];
+    this.blackSquare = 'square black';
+    this.whiteSquare = 'square white';
+    this.blueSquare = 'square blue';
+    this.greenSquare = 'square green';
   }
 
   public game: Game;
@@ -26,8 +30,12 @@ export class GameComponent {
   public squares: any;
   public pieceIsSelected: any;
   public selectedPieceId: any;
+  public greenSquare: string;
+  public blueSquare: string;
+  public blackSquare: string;
+  public whiteSquare: string;
 
-  private static getSquareId(square: Square) {
+  public getSquareId(square: Square) {
     return square.x + ',' + square.y;
   }
 
@@ -46,12 +54,13 @@ export class GameComponent {
         // Clears the square colors to black/white
         this.clearChoice();
       }, postError => console.error(postError));
+
     } else {
       // API calls that returns true if the square clicked has a piece that is the right color
       this.http.get<any>(this.baseUrl + 'game/' + clickedId + '/' + this.game.currentTurn + '/currentTurnPiece').subscribe(validSquare => {
         if (validSquare) {
           // Updates variables and changes color of the clicked square
-          selected.className = 'blue';
+          selected.className = this.blueSquare;
           this.pieceIsSelected = true;
           this.selectedPieceId = clickedId;
 
@@ -68,8 +77,8 @@ export class GameComponent {
   // Changes a list of squares color to green
   private showPossibleSquares(squares: Square[], clicked: string) {
     squares.forEach(function (square) {
-      document.getElementById(GameComponent.getSquareId(square)).className = 'green';
-    });
+      document.getElementById(this.getSquareId(square)).className = this.greenSquare;
+    }, this);
   }
 
   // Clears any choice a player has made
@@ -78,11 +87,11 @@ export class GameComponent {
     // Resets the color of all squares
     this.game.board.forEach(function (column) {
       column.forEach(function (square) {
-        let classColor = 'white';
-        if ((square.x + square.y) % 2 === 0) { classColor = 'black'; }
-        document.getElementById(GameComponent.getSquareId(square)).className = classColor;
-      });
-    });
+        let classColor = this.whiteSquare;
+        if ((square.x + square.y) % 2 === 0) { classColor = this.blackSquare; }
+        document.getElementById(this.getSquareId(square)).className = classColor;
+      }, this);
+    }, this);
   }
 
   // Gets the color for a square given the [x] and [y] coord
