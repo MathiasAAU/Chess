@@ -1,9 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "2SyLqXUV55/wsuu0R0mlNPegDCqjE7RdFpFgIygv0YTZEdxdM4u+/oC6ygUIFIlUpuBL8kWjMleDjROS0Vgudw==",
+  "dgSpecHash": "YAvUxWc+6UJYLxzXVyG21cH3DEh2/Tb8Yni+qY0y0rMKjifJvoGof9YlQoppqyRZbqZzA2T63KFMVgZq2X9D/g==",
   "success": true,
   "projectFilePath": "D:\\Coding\\Chess\\UnitTests\\UnitTests.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\Mathias\\.nuget\\packages\\angular.material\\1.1.12\\angular.material.1.1.12.nupkg.sha512",
+    "C:\\Users\\Mathias\\.nuget\\packages\\angularjs.animate\\1.6.4\\angularjs.animate.1.6.4.nupkg.sha512",
+    "C:\\Users\\Mathias\\.nuget\\packages\\angularjs.aria\\1.6.4\\angularjs.aria.1.6.4.nupkg.sha512",
+    "C:\\Users\\Mathias\\.nuget\\packages\\angularjs.core\\1.6.4\\angularjs.core.1.6.4.nupkg.sha512",
     "C:\\Users\\Mathias\\.nuget\\packages\\microsoft.aspnetcore.nodeservices\\3.1.2\\microsoft.aspnetcore.nodeservices.3.1.2.nupkg.sha512",
     "C:\\Users\\Mathias\\.nuget\\packages\\microsoft.aspnetcore.spaservices\\3.1.2\\microsoft.aspnetcore.spaservices.3.1.2.nupkg.sha512",
     "C:\\Users\\Mathias\\.nuget\\packages\\microsoft.aspnetcore.spaservices.extensions\\3.1.2\\microsoft.aspnetcore.spaservices.extensions.3.1.2.nupkg.sha512",

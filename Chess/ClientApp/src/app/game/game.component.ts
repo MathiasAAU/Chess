@@ -34,6 +34,7 @@ export class GameComponent {
   public blueSquare: string;
   public blackSquare: string;
   public whiteSquare: string;
+  public displayMoves: Move[];
 
   public getSquareId(square: Square) {
     return square.x + ',' + square.y;
@@ -111,6 +112,41 @@ export class GameComponent {
       }, getError => console.error(getError));
     }, postError => console.error(postError));
     this.clearChoice();
+  }
+
+  public getPlayer(isWhite: boolean) {
+    return this.game.player1.isWhite === isWhite ? this.game.player1 : this.game.player2;
+  }
+
+  public getKilledPieces(isWhite: boolean) {
+    let string = '';
+    this.game.deadPieces.forEach(function (piece) {
+      if (piece.isWhite !== isWhite) {
+        string += piece.piece;
+      }
+    });
+    return string;
+  }
+
+  public currentTurnColor() {
+    return this.game.currentTurn ? 'White' : 'Black';
+  }
+
+  public displaySquare(x: number, y: number) {
+    const displayY = y + 1;
+    let displayX = '';
+    switch (x) {
+      case 0: displayX = 'A'; break;
+      case 1: displayX = 'B'; break;
+      case 2: displayX = 'C'; break;
+      case 3: displayX = 'D'; break;
+      case 4: displayX = 'E'; break;
+      case 5: displayX = 'F'; break;
+      case 6: displayX = 'G'; break;
+      case 7: displayX = 'H'; break;
+      default: displayX = 'ERROR'; break;
+    }
+    return displayX + displayY;
   }
 
 }

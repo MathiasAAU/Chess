@@ -2,6 +2,29 @@
   "version": 3,
   "targets": {
     ".NETCoreApp,Version=v3.1": {
+      "Angular.Material/1.1.12": {
+        "type": "package",
+        "dependencies": {
+          "AngularJS.Animate": "1.6.4",
+          "AngularJS.Aria": "1.6.4",
+          "AngularJS.Core": "1.6.4"
+        }
+      },
+      "AngularJS.Animate/1.6.4": {
+        "type": "package",
+        "dependencies": {
+          "AngularJS.Core": "1.6.4"
+        }
+      },
+      "AngularJS.Aria/1.6.4": {
+        "type": "package",
+        "dependencies": {
+          "AngularJS.Core": "1.6.4"
+        }
+      },
+      "AngularJS.Core/1.6.4": {
+        "type": "package"
+      },
       "Microsoft.AspNetCore.NodeServices/3.1.2": {
         "type": "package",
         "dependencies": {
@@ -1274,6 +1297,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v3.1",
         "dependencies": {
+          "Angular.Material": "1.1.12",
           "Microsoft.AspNetCore.SpaServices.Extensions": "3.1.2",
           "Newtonsoft.Json": "12.0.3",
           "System.Text.Json": "5.0.0-preview.6.20305.6"
@@ -1291,6 +1315,70 @@
     }
   },
   "libraries": {
+    "Angular.Material/1.1.12": {
+      "sha512": "CTyAFKCMHsFfXrw7E6ZbsAljSW7PQPHofVbOC/ePf2M4l5SCGjIA38GiT7/DzsHdbY/dcBAPj+MkbfNdJZXwRg==",
+      "type": "package",
+      "path": "angular.material/1.1.12",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "angular.material.1.1.12.nupkg.sha512",
+        "angular.material.nuspec",
+        "content/Content/angular-material.css",
+        "content/Content/angular-material.layout-attributes.css",
+        "content/Content/angular-material.layout-attributes.min.css",
+        "content/Content/angular-material.layouts.css",
+        "content/Content/angular-material.layouts.ie_fixes.css",
+        "content/Content/angular-material.layouts.min.css",
+        "content/Content/angular-material.min.css",
+        "content/Scripts/angular-material-mocks.js",
+        "content/Scripts/angular-material.js",
+        "content/Scripts/angular-material.min.js"
+      ]
+    },
+    "AngularJS.Animate/1.6.4": {
+      "sha512": "WzBLUe9i8mO40h4h7hK8gXJbB/v+0jnczFagGuPV2F94eGgNNHdim57Kk4y6UpMUha5XgXnK1eYb+bn5j8LOSQ==",
+      "type": "package",
+      "path": "angularjs.animate/1.6.4",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "angularjs.animate.1.6.4.nupkg.sha512",
+        "angularjs.animate.nuspec",
+        "content/Scripts/angular-animate.js",
+        "content/Scripts/angular-animate.min.js",
+        "content/Scripts/angular-animate.min.js.map"
+      ]
+    },
+    "AngularJS.Aria/1.6.4": {
+      "sha512": "Z5vQOQxr594RiNlXBTm4OyGH3KzfNIwHniNZrBS/Jxyg3dW3vj5Yx278NCJQjrVcQqC5xN9gQanj4Dsl5D+oIw==",
+      "type": "package",
+      "path": "angularjs.aria/1.6.4",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "angularjs.aria.1.6.4.nupkg.sha512",
+        "angularjs.aria.nuspec",
+        "content/Scripts/angular-aria.js",
+        "content/Scripts/angular-aria.min.js",
+        "content/Scripts/angular-aria.min.js.map"
+      ]
+    },
+    "AngularJS.Core/1.6.4": {
+      "sha512": "ghA96fP+f9mJB/IFBftl47Lg2JIR6XNv26/ImBOUsBZqZBkzvGRKW8Kvhgdwd/oJFIz8diRrsJnTK87BsAFTzQ==",
+      "type": "package",
+      "path": "angularjs.core/1.6.4",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "angularjs.core.1.6.4.nupkg.sha512",
+        "angularjs.core.nuspec",
+        "content/Scripts/angular-mocks.js",
+        "content/Scripts/angular.js",
+        "content/Scripts/angular.min.js",
+        "content/Scripts/angular.min.js.map"
+      ]
+    },
     "Microsoft.AspNetCore.NodeServices/3.1.2": {
       "sha512": "0F2QokWzZs1SyuFns5QEAMyTaPBHuAa/n1LbB4Y99Y8JOeYvgIKMUolrwMaXDwDX/vBhb4gsE6c0WSJ9OfpP/w==",
       "type": "package",

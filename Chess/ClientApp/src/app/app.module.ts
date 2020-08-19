@@ -26,7 +26,7 @@ import {AgGridModule} from 'ag-grid-angular';
       {path: '', component: HomeComponent, pathMatch: 'full'},
       {path: 'game', component: GameComponent},
     ]),
-    AgGridModule
+    AgGridModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

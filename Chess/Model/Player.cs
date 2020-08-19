@@ -9,6 +9,7 @@
 
         public Player(bool isWhite = false) {
             this._isWhite = isWhite;
+            this.name = isWhite ? "Player 1" : "Player 2";
         }
 
         public JObject toJson() {

@@ -1,23 +1,44 @@
 <html>
   <body>
-    <p aria-live="polite">Current turn: <strong>{{ game.currentTurn }}</strong></p>
-    <p aria-live="polite">Player 1: {{game.player1.isWhite}} <strong>{{ game.player1.score}}</strong></p>
-    <p aria-live="polite">Player 2: {{game.player2.isWhite}} <strong>{{ game.player2.score}}</strong></p>
-    <p aria-live="polite">Game state <strong>{{ game.state}}</strong></p>
+    <div class="row">
+      <div id="game_info" class="column side">
+        <div class="sideHeader">Black: {{getPlayer(false).name}}</div>
+        <div class="moveText"><strong>Score: </strong>{{getPlayer(false).score}}</div>
+        <div class="moveText"><strong>Pieces: </strong>{{getKilledPieces(false)}}</div>
 
-    <button class="btn btn-primary" (click)="clearChoice()">Clear</button>
-    <button class="btn btn-primary" (click)="newGame()">New game</button>
 
-    <div id="chessboard" class="chessboard">
-      <div *ngFor="let row of squares;">
-        <div *ngFor="let i of squares; let column = index">
-          <div id="{{column}},{{row}}" [textContent]="game.board[column][row].piece" class="square {{getSquareColor(column, row)}}" (click)="selectSquare(column + ',' + row)"></div>
+        <div class="gameBox">
+          <div class="gameText"><strong>Current turn: </strong>{{ currentTurnColor() }}</div>
+          <div class="gameText"><strong>Game state </strong>{{ game.state}}</div>
+          <button class="btn btn-primary" (click)="clearChoice()">Clear choice</button>
+          <button class="btn btn-primary" (click)="newGame()">New game</button>
+        </div>
+
+        <div class="whitePlayerBox">
+          <div class="sideHeader">White: {{getPlayer(true).name}}</div>
+          <div class="moveText"><strong>Score: </strong>{{getPlayer(true).score}}</div>
+          <div class="moveText"><strong>Pieces: </strong>{{getKilledPieces(true)}}</div>
         </div>
       </div>
-    </div>
 
-    <div *ngFor="let move of game.moves;">
-      <p aria-live="polite">{{move.player.name}} - {{move.piece}}: {{move.origin.x}},{{move.origin.y}} to {{move.dest.x}},{{move.dest.y}}</p>
+      <div class="column middle">
+        <div id="chessboard" class="chessboard">
+          <div *ngFor="let row of squares;">
+            <div *ngFor="let i of squares; let column = index">
+              <div id="{{column}},{{row}}" [textContent]="game.board[column][row].piece" class="square {{getSquareColor(column, row)}}" (click)="selectSquare(column + ',' + row)"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="move_info" class="column side">
+        <div class="sideHeader">Moves</div>
+        <div *ngFor="let move of this.game.moves.reverse(); let i = index">
+          <div class="moveText" *ngIf="i < 17">
+            {{move.player.name}}: {{move.piece}} {{displaySquare(move.origin.x, move.origin.y)}} to {{displaySquare(move.dest.x, move.dest.y)}}
+          </div>
+        </div>
+      </div>
     </div>
 
   </body>
