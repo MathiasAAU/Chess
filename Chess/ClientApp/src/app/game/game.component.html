@@ -2,7 +2,7 @@
   <body>
     <div class="row">
       <div id="game_info" class="column side">
-        <div class="sideHeader">Black: {{getPlayer(false).name}}</div>
+        <div class="sideHeader"><strong>Black:</strong> {{getPlayer(false).name}}</div>
         <div class="moveText"><strong>Score: </strong>{{getPlayer(false).score}}</div>
         <div class="moveText"><strong>Pieces: </strong>{{getKilledPieces(false)}}</div>
 
@@ -15,7 +15,7 @@
         </div>
 
         <div class="whitePlayerBox">
-          <div class="sideHeader">White: {{getPlayer(true).name}}</div>
+          <div class="sideHeader"><strong>White:</strong> {{getPlayer(true).name}}</div>
           <div class="moveText"><strong>Score: </strong>{{getPlayer(true).score}}</div>
           <div class="moveText"><strong>Pieces: </strong>{{getKilledPieces(true)}}</div>
         </div>

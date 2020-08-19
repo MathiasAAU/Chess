@@ -7,6 +7,7 @@ import { Component } from '@angular/core';
 })
 export class NavMenuComponent {
   isExpanded = false;
+  icon = '\u265A';
 
   collapse() {
     this.isExpanded = false;
